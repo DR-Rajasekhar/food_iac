@@ -1,0 +1,2 @@
+src_dir: "/var/lib/jenkins/workspace/DEV-FOOD/"
+dest_dir: "/devapps/food"

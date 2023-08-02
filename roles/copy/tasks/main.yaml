@@ -1,0 +1,12 @@
+- name: copy
+  synchronize:
+    src: "{{ src_dir }}"
+    dest: "{{ dest_dir }}"
+    rsync_opts:
+    - "--exclude=food_iac"
+    - "--exclude=.git"
+    - "--exclude=.gitignore"
+    - "--exclude=README.md"
+    - "--exclude=food_iac@tmp"
+  tags:
+  - copy_files

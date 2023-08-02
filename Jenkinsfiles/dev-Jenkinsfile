@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+    environment
+	{
+		apps_infra_env = "food_dev"        
+	}
+    stages {                
+        stage("SCM Checkout") {
+            steps {
+                git branch: 'main',                    
+                    url: 'https://github.com/DR-Rajasekhar/food.git'
+                dir("food_iac") {
+                    git branch: "master",                    
+                    url: 'https://github.com/DR-Rajasekhar/food_iac.git'
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {                
+                ansiblePlaybook become: true, 
+                credentialsId: 'APP_AWS_EC2',
+                disableHostKeyChecking: true,
+                extras: "-e apps_env=${env.apps_infra_env}",  
+                installation: 'ansible',
+                inventory: 'food_iac/inventories/dev.inv', 
+                limit: 'FoodAppServer', 
+                playbook: 'food_iac/appDeploy.yaml',
+                tags: 'copy_files' 
+            }
+        }        
+    }
+}

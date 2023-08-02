@@ -1,0 +1,4 @@
+[JenkinsServers]
+3.111.85.73 ansible_user=ubuntu
+[FoodAppServer]
+13.233.134.223 ansible_user=ubuntu
